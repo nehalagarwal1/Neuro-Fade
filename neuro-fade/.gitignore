@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Build
+dist/
+build/
+
+# Misc
+*.zip
+*.crx
+*.pem
