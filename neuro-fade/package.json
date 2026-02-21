@@ -1,0 +1,11 @@
+{
+    "name": "neuro-fade",
+    "version": "1.0.0",
+    "description": "Real-Time Dopamine Decelerator — AI-powered Chrome extension that gently breaks doomscrolling loops using AMD Ryzen AI NPU acceleration.",
+    "author": "Nehal Agarwal",
+    "license": "MIT",
+    "scripts": {
+        "dev": "echo 'Load extension in Chrome: chrome://extensions -> Developer Mode -> Load Unpacked -> select neuro-fade/'",
+        "icons": "node scripts/generate-icons.js"
+    }
+}

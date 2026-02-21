@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "Neuro-Fade",
+  "version": "1.0.0",
+  "description": "Real-Time Dopamine Decelerator — Gently breaks doomscrolling loops by draining artificial dopamine from high-stimulation content.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs"
+  ],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "src/assets/icons/icon16.png",
+      "48": "src/assets/icons/icon48.png",
+      "128": "src/assets/icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "src/assets/icons/icon16.png",
+    "48": "src/assets/icons/icon48.png",
+    "128": "src/assets/icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "src/background/service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://*.instagram.com/*",
+        "*://*.tiktok.com/*",
+        "*://*.twitter.com/*",
+        "*://*.x.com/*",
+        "*://*.reddit.com/*"
+      ],
+      "js": [
+        "src/shared/constants.js",
+        "src/content/frame-analyzer.js",
+        "src/content/detector.js",
+        "src/effects/audio-processor.js",
+        "src/effects/fade-engine.js",
+        "src/content/main.js"
+      ],
+      "css": [
+        "src/content/content.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/dashboard/dashboard.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

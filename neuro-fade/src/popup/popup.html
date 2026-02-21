@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neuro-Fade</title>
+  <link rel="stylesheet" href="popup.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <div class="popup-header">
+      <div class="logo-row">
+        <div class="logo-icon">
+          <svg viewBox="0 0 32 32" width="28" height="28">
+            <defs>
+              <linearGradient id="brainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#a855f7"/>
+                <stop offset="50%" style="stop-color:#6366f1"/>
+                <stop offset="100%" style="stop-color:#06b6d4"/>
+              </linearGradient>
+            </defs>
+            <path d="M16 4C10 4 6 8 6 13c0 3 1.5 5.5 4 7v4c0 1 1 2 2 2h8c1 0 2-1 2-2v-4c2.5-1.5 4-4 4-7 0-5-4-9-10-9z"
+                  fill="none" stroke="url(#brainGrad)" stroke-width="1.5"/>
+            <path d="M12 13c0-2 2-4 4-4M16 9c2 0 4 2 4 4M10 16h12M13 20h6"
+                  fill="none" stroke="url(#brainGrad)" stroke-width="1" opacity="0.6"/>
+            <circle cx="16" cy="13" r="1.5" fill="url(#brainGrad)" opacity="0.8">
+              <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <h1>Neuro-Fade</h1>
+          <span class="subtitle" id="platformLabel">Analyzing...</span>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="mainToggle" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Dopamine Gauge -->
+    <div class="gauge-section">
+      <div class="gauge-container">
+        <svg viewBox="0 0 200 120" class="gauge-svg">
+          <defs>
+            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%">
+              <stop offset="0%" style="stop-color:#22c55e"/>
+              <stop offset="33%" style="stop-color:#eab308"/>
+              <stop offset="66%" style="stop-color:#f97316"/>
+              <stop offset="100%" style="stop-color:#ef4444"/>
+            </linearGradient>
+          </defs>
+          <!-- Background arc -->
+          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none"
+                stroke="rgba(255,255,255,0.08)" stroke-width="10" stroke-linecap="round"/>
+          <!-- Active arc -->
+          <path id="gaugeArc" d="M 20 100 A 80 80 0 0 1 180 100" fill="none"
+                stroke="url(#gaugeGrad)" stroke-width="10" stroke-linecap="round"
+                stroke-dasharray="251.3" stroke-dashoffset="251.3"
+                style="transition: stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1)"/>
+          <!-- Glow -->
+          <path id="gaugeGlow" d="M 20 100 A 80 80 0 0 1 180 100" fill="none"
+                stroke="url(#gaugeGrad)" stroke-width="14" stroke-linecap="round"
+                stroke-dasharray="251.3" stroke-dashoffset="251.3" opacity="0.2" filter="blur(4px)"
+                style="transition: stroke-dashoffset 1s cubic-bezier(0.4,0,0.2,1)"/>
+        </svg>
+        <div class="gauge-value">
+          <span class="score-number" id="scoreDisplay">0</span>
+          <span class="score-label">Dopamine Score</span>
+        </div>
+      </div>
+      <div class="gauge-status" id="statusText">Monitoring activity...</div>
+    </div>
+
+    <!-- Effect Meters -->
+    <div class="effects-section">
+      <div class="effect-row">
+        <span class="effect-icon">🎨</span>
+        <span class="effect-label">Grayscale</span>
+        <div class="effect-bar"><div class="effect-fill" id="grayscaleBar"></div></div>
+        <span class="effect-value" id="grayscaleValue">0%</span>
+      </div>
+      <div class="effect-row">
+        <span class="effect-icon">🔊</span>
+        <span class="effect-label">Audio Calm</span>
+        <div class="effect-bar"><div class="effect-fill audio" id="audioBar"></div></div>
+        <span class="effect-value" id="audioValue">0%</span>
+      </div>
+      <div class="effect-row">
+        <span class="effect-icon">🐌</span>
+        <span class="effect-label">Slowdown</span>
+        <div class="effect-bar"><div class="effect-fill speed" id="speedBar"></div></div>
+        <span class="effect-value" id="speedValue">1.0x</span>
+      </div>
+    </div>
+
+    <!-- Sensitivity Slider -->
+    <div class="sensitivity-section">
+      <div class="sensitivity-header">
+        <span>Sensitivity</span>
+        <span id="sensitivityValue">50%</span>
+      </div>
+      <input type="range" id="sensitivitySlider" min="0" max="100" value="50" class="sensitivity-slider">
+      <div class="sensitivity-labels">
+        <span>Gentle</span>
+        <span>Aggressive</span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions-section">
+      <button class="btn btn-breathe" id="breatheBtn">
+        <span class="btn-icon">🫁</span>
+        <span>Breathe</span>
+      </button>
+      <button class="btn btn-dashboard" id="dashboardBtn">
+        <span class="btn-icon">📊</span>
+        <span>Dashboard</span>
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <div class="popup-footer">
+      <div class="npu-status" id="npuStatus">
+        <span class="npu-dot"></span>
+        <span>AMD NPU: Detecting...</span>
+      </div>
+      <span class="privacy-badge">🔒 100% Local</span>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

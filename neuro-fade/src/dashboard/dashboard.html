@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuro-Fade Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Ambient background -->
+    <div class="ambient-bg">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="ambient-orb orb-3"></div>
+    </div>
+
+    <div class="dashboard">
+        <!-- Navigation -->
+        <nav class="nav">
+            <div class="nav-brand">
+                <div class="nav-logo">
+                    <svg viewBox="0 0 32 32" width="32" height="32">
+                        <defs>
+                            <linearGradient id="navGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#a855f7" />
+                                <stop offset="50%" style="stop-color:#6366f1" />
+                                <stop offset="100%" style="stop-color:#06b6d4" />
+                            </linearGradient>
+                        </defs>
+                        <path
+                            d="M16 4C10 4 6 8 6 13c0 3 1.5 5.5 4 7v4c0 1 1 2 2 2h8c1 0 2-1 2-2v-4c2.5-1.5 4-4 4-7 0-5-4-9-10-9z"
+                            fill="none" stroke="url(#navGrad)" stroke-width="1.5" />
+                        <circle cx="16" cy="13" r="1.5" fill="url(#navGrad)">
+                            <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite" />
+                        </circle>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="nav-title">Neuro-Fade</h1>
+                    <p class="nav-subtitle">Dopamine Decelerator Dashboard</p>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <div class="npu-badge" id="npuBadge">
+                    <span class="npu-indicator"></span>
+                    <span>AMD NPU: Detecting...</span>
+                </div>
+                <div class="privacy-badge-nav">🔒 100% Offline</div>
+            </div>
+        </nav>
+
+        <!-- Stats Overview -->
+        <section class="stats-grid">
+            <div class="stat-card gradient-purple">
+                <div class="stat-icon">🛡️</div>
+                <div class="stat-content">
+                    <div class="stat-value" id="totalSessions">0</div>
+                    <div class="stat-label">Sessions Protected</div>
+                </div>
+                <div class="stat-sparkline" id="sessionsSparkline"></div>
+            </div>
+            <div class="stat-card gradient-cyan">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-content">
+                    <div class="stat-value" id="totalMinutes">0<span class="stat-unit">min</span></div>
+                    <div class="stat-label">Doomscrolling Intercepted</div>
+                </div>
+            </div>
+            <div class="stat-card gradient-green">
+                <div class="stat-icon">📉</div>
+                <div class="stat-content">
+                    <div class="stat-value" id="avgReduction">0<span class="stat-unit">%</span></div>
+                    <div class="stat-label">Avg Dopamine Reduction</div>
+                </div>
+            </div>
+            <div class="stat-card gradient-orange">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-content">
+                    <div class="stat-value" id="totalInterventions">0</div>
+                    <div class="stat-label">Total Interventions</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="content-grid">
+            <!-- Neural Activity Visualization -->
+            <section class="card neural-card">
+                <div class="card-header">
+                    <h2>🧠 Neural Activity Monitor</h2>
+                    <span class="live-badge">● LIVE</span>
+                </div>
+                <div class="neural-canvas-container">
+                    <canvas id="neuralCanvas" width="600" height="280"></canvas>
+                </div>
+                <div class="neural-legend">
+                    <span class="legend-item"><span class="legend-dot" style="background:#a855f7"></span>Dopamine
+                        Level</span>
+                    <span class="legend-item"><span class="legend-dot" style="background:#06b6d4"></span>Fade
+                        Intensity</span>
+                    <span class="legend-item"><span class="legend-dot" style="background:#22c55e"></span>Calm
+                        State</span>
+                </div>
+            </section>
+
+            <!-- Session Timeline -->
+            <section class="card timeline-card">
+                <div class="card-header">
+                    <h2>📊 Session Timeline</h2>
+                    <div class="time-filter">
+                        <button class="filter-btn active" data-range="today">Today</button>
+                        <button class="filter-btn" data-range="week">Week</button>
+                        <button class="filter-btn" data-range="month">Month</button>
+                    </div>
+                </div>
+                <div class="timeline-canvas-container">
+                    <canvas id="timelineCanvas" width="600" height="200"></canvas>
+                </div>
+            </section>
+        </div>
+
+        <!-- Settings Grid -->
+        <div class="settings-grid">
+            <!-- Per-Site Settings -->
+            <section class="card sites-card">
+                <div class="card-header">
+                    <h2>🌐 Per-Site Settings</h2>
+                </div>
+                <div class="sites-list" id="sitesList">
+                    <!-- Generated dynamically -->
+                </div>
+            </section>
+
+            <!-- Effect Tuning -->
+            <section class="card tuning-card">
+                <div class="card-header">
+                    <h2>🎛️ Effect Tuning</h2>
+                </div>
+                <div class="tuning-controls">
+                    <div class="tuning-row">
+                        <div class="tuning-label">
+                            <span class="tuning-icon">🎨</span>
+                            <div>
+                                <div class="tuning-name">Grayscale Speed</div>
+                                <div class="tuning-desc">How quickly colors drain</div>
+                            </div>
+                        </div>
+                        <input type="range" class="tuning-slider" id="grayscaleSpeed" min="0" max="100" value="50">
+                    </div>
+                    <div class="tuning-row">
+                        <div class="tuning-label">
+                            <span class="tuning-icon">🔊</span>
+                            <div>
+                                <div class="tuning-name">Audio Calming</div>
+                                <div class="tuning-desc">Pitch shift + low-pass intensity</div>
+                            </div>
+                        </div>
+                        <input type="range" class="tuning-slider" id="audioCalming" min="0" max="100" value="50">
+                    </div>
+                    <div class="tuning-row">
+                        <div class="tuning-label">
+                            <span class="tuning-icon">🐌</span>
+                            <div>
+                                <div class="tuning-name">Playback Deceleration</div>
+                                <div class="tuning-desc">Max slowdown amount</div>
+                            </div>
+                        </div>
+                        <input type="range" class="tuning-slider" id="playbackDecel" min="0" max="100" value="50">
+                    </div>
+                    <div class="tuning-row">
+                        <div class="tuning-label">
+                            <span class="tuning-icon">🔆</span>
+                            <div>
+                                <div class="tuning-name">Brightness Reduction</div>
+                                <div class="tuning-desc">How much to dim the screen</div>
+                            </div>
+                        </div>
+                        <input type="range" class="tuning-slider" id="brightnessDim" min="0" max="100" value="30">
+                    </div>
+                </div>
+            </section>
+
+            <!-- AMD NPU Panel -->
+            <section class="card npu-card">
+                <div class="card-header">
+                    <h2>🔧 AMD Ryzen AI NPU</h2>
+                </div>
+                <div class="npu-content" id="npuContent">
+                    <div class="npu-hero">
+                        <div class="npu-chip">
+                            <div class="chip-glow"></div>
+                            <span class="chip-label">NPU</span>
+                        </div>
+                        <div class="npu-info">
+                            <h3 id="npuModel">Detecting Hardware...</h3>
+                            <p id="npuDesc">Scanning for AMD Ryzen AI NPU via WebNN API...</p>
+                        </div>
+                    </div>
+
+                    <!-- Hardware Detection Results -->
+                    <div class="hardware-info" id="hardwareInfo">
+                        <div class="hw-row"><span class="hw-label">Chip Model</span><span class="hw-value"
+                                id="hwChip">Detecting...</span></div>
+                        <div class="hw-row"><span class="hw-label">NPU Engine</span><span class="hw-value"
+                                id="hwNPU">Detecting...</span></div>
+                        <div class="hw-row"><span class="hw-label">NPU Performance</span><span class="hw-value"
+                                id="hwTOPS">-</span></div>
+                        <div class="hw-row"><span class="hw-label">CPU Threads</span><span class="hw-value"
+                                id="hwCores">-</span></div>
+                        <div class="hw-row"><span class="hw-label">GPU</span><span class="hw-value"
+                                id="hwGPU">Detecting...</span></div>
+                        <div class="hw-row"><span class="hw-label">WebNN API</span><span class="hw-value"
+                                id="hwWebNN">-</span></div>
+                        <div class="hw-row"><span class="hw-label">ONNX Runtime</span><span class="hw-value"
+                                id="hwONNX">-</span></div>
+                    </div>
+
+                    <div class="npu-metrics">
+                        <div class="npu-metric">
+                            <span class="metric-value" id="npuFrames">0</span>
+                            <span class="metric-label">Frames Analyzed</span>
+                        </div>
+                        <div class="npu-metric">
+                            <span class="metric-value" id="npuLatency">-</span>
+                            <span class="metric-label">Avg Latency</span>
+                        </div>
+                        <div class="npu-metric">
+                            <span class="metric-value" id="npuBackend">-</span>
+                            <span class="metric-label">Backend</span>
+                        </div>
+                    </div>
+
+                    <!-- Benchmark Section -->
+                    <div class="benchmark-section">
+                        <div class="bench-header">
+                            <h4>⚡ Performance Benchmark</h4>
+                            <button class="btn-bench" id="runBenchmark">Run Benchmark</button>
+                        </div>
+                        <div class="bench-results" id="benchResults">
+                            <p class="bench-placeholder">Click "Run Benchmark" to compare NPU vs CPU inference speeds.
+                            </p>
+                        </div>
+                        <div class="bench-chart-container" id="benchChartContainer" style="display:none">
+                            <canvas id="benchCanvas" width="500" height="160"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="npu-privacy">
+                        <div class="privacy-icon">🔒</div>
+                        <div>
+                            <h4>Privacy First</h4>
+                            <p>All processing happens locally on your AMD Ryzen AI processor. No browser history, screen
+                                recordings, or personal data ever leaves your device.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            <p>Neuro-Fade v1.0 — Built for the AMD Pervasive AI Developer Contest</p>
+            <p class="footer-tagline">Draining artificial dopamine, one frame at a time.</p>
+        </footer>
+    </div>
+
+    <script src="../npu/npu-bridge.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>
